@@ -222,7 +222,7 @@
             const zoom = document.querySelector('input[name="zoom"]:checked').value;
 
             // Get radians for future use in the range
-            const radians = (h / 16) / (180 / Math.PI);
+            const radians = toRadians(h/16)
 
             // Calculate the range
             var range = 0
@@ -246,7 +246,7 @@
             const radians = Math.asin((l / (h / 16)) / (L / H));
 
             // Calculate degrees for the AOB value
-            const degrees = (180 / Math.PI) * radians;
+            const degrees = toDegrees(radians)
 
             // Calculate reversed angle in case of "AOB going away from you"
             if (direction === "away") {
@@ -270,6 +270,14 @@
 
             // Show the result
             document.getElementById('result_speed').innerHTML = knots.toFixed(2) + ' kn/s';
+        }
+
+        function toDegrees (rad) {
+            return rad * (180 / Math.PI);
+        }
+
+        function toRadians (degree) {
+            return degree * (Math.PI / 180);
         }
     </script>
 </body>
