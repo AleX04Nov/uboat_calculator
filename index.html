@@ -266,7 +266,7 @@
             const mps = (d / t);
 
             // Convert the speed into knots per second
-            const knots = mps * 1.94384 - (uboat_v * Math.sin(rber));
+            const knots = mps * 1.94384 + (uboat_v * Math.sin(toRadians(rber)));
 
             // Show the result
             document.getElementById('result_speed').innerHTML = knots.toFixed(2) + ' kn/s';
