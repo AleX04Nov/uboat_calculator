@@ -206,7 +206,7 @@
                 <label class="label text" for="rber">Relative Bearing (°) (RBER):</label>
                 <input type="input rber_input" type="number" id="rber" step="1" value="0" required/>
                 
-                <button class="button" onclick="calculate()">Calculate Speed</button>
+                <button class="button" onclick="calculateSpeed()">Calculate Speed</button>
                 
                 <div class="result">
                 <p class="speed__p p text">Result:</p>
@@ -255,7 +255,7 @@
                 document.getElementById("result_AOB").textContent = `${degrees.toFixed(2)}°`;
             }
         }
-        function calculate() {
+        function calculateSpeed() {
             // Get values from the input fields
             const d = parseFloat(document.getElementById('d').value);
             const t = parseFloat(document.getElementById('t').value);
