@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>U-Boat Calculator</title>
+</head>
+<style>
+* {
+    box-sizing: border-box;
+    }  
+
+.root {
+    margin: 0;
+    max-width: 1920spx;
+    font-family:'Open Sans', 'Arial', serif;
+    /* background-image: url("u-96.png"); */
+    background-repeat: no-repeat;
+    background-size: 916px 711px;
+    z-index: -1;
+    font-family: "Courier New", Courier, monospace;
+}
+
+
+.text{
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    color: #333333;
+}
+
+.main__box{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    align-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.calc__box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* height: 500px; */
+    /* width: 500px; */
+    box-shadow: 10px 10px 40px 20px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.head__text {
+    text-align: center;
+    font-size: 36px;
+    padding: 10px;
+    color: white;
+}
+
+.boxbox{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-direction: column;
+    margin: 0 20px 20px 20px;
+    /*height: 460px;*/
+    width: 460px;
+}
+
+
+.card_header{    
+    background-color: #333333;
+}
+
+.AOB__change-text {
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.radio__box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px 0;
+    margin: 0;
+}
+
+.input {
+    padding: 0;
+    margin-top: 5px;
+
+}
+
+.button{
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    padding: 0;
+    text-align: center;
+    background-color: #333333;
+    color: white;
+    border: none;
+    height: 40px;
+    width: 250px;
+    font-family: "Courier New", Courier, monospace;
+    /* font-weight: bold; */
+    font-size: 20px;
+    border-radius: 3px;
+}
+
+.AOB__p {
+    margin-top: 20px;
+}
+
+.p {
+    margin: 0;
+    padding: 0;
+}
+
+.result{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+</style>
+<body class="root">
+    <div class="main__box">
+        <div class="calc__box text">
+            <div class="card_header">
+                <h1 class="head__text text">Range calculation</h1>
+            </div>
+            <div class="boxbox">
+                <h2 class="AOB__change-text text">Choose Zoom:</h2>
+                <div class="radio__box">
+                    <div class="radio__group">
+                        <input class="input AOB__input" type="radio" id="15_x_zoom" name="zoom" value="1.5x">
+                        <label class="label AON__label text" for="1.5x">1.5x</label>
+                    </div>
+                    <div class="radio__group">
+                        <input class="input AOB__input" type="radio" id="6_x_zoom" name="zoom" value="6x" checked>
+                        <label class="label AON__label text" for="6x">6x</label>
+                    </div>
+                </div>
+                <label class="label text" for="h">Measured Centiradians of Known Height On Ship (1/16°) (h):</label>
+                <input class="input range__input" type="number" id="h" step="1" required/>
+                
+                <label class="label text" for="H">Known Height On Ship (m) (H):</label>
+                <input class="input range__input" type="number" id="H" step="0.1" required/>
+                
+                <button class="button" type="button" onclick="calculateRange()">Calculate Range</button>
+                <div class="result">
+                    <p class="range__p p text">Result:</p>
+                    <p class="range__p p" id="result_range"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="calc__box text">
+            <div class="card_header">
+                <h1 class="head__text text">AOB calculation</h1>
+            </div>
+            <div class="boxbox">
+                <h2 class="AOB__change-text text">Choose direction:</h2>
+                <div class="radio__box">
+                    <div class="radio__group">
+                        <input class="input AOB__input" type="radio" id="towards" name="direction" value="towards" checked>
+                        <label class="label AON__label text" for="towards">AOB going towards you</label>
+                    </div>
+                    <div class="radio__group">
+                        <input class="input AOB__input" type="radio" id="away" name="direction" value="away">
+                        <label class="label AON__label text" for="away">AOB going away from you</label>
+                    </div>
+                </div>
+                    <label class="label text" for="l">Measured Centiradians Of Ship Length (°) (l):</label>
+                    <input class="input AOB__input"  type="number" id="l" step="0.1" required/>
+                    
+                    <label class="label text" for="L">Length Of Ship (m) (L):</label>
+                    <input class="input AOB__input" type="number" id="L" step="1" required/>
+                    
+                    <button class="button" type="button" onclick="calculateAOB()">Calculate AOB</button>
+                    <div class="result">
+                    <p class="AOB__p p text">Result:</p>
+                    <p class="AOB__p p" id="result_AOB"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="calc__box">
+            <div class="card_header">
+                <h1 class="head__text text">Speed calculation</h1>
+            </div>
+            <div class="boxbox">
+                <label class="label text" for="L" style="margin-top: 20px;">Ship's Traveled Distance (m) (d):</label>
+                <input class="input AOB__input" type="number" id="d" step="1" required/>
+                
+                <label class="label text" for="t">Periscope crossing time (s) (t):</label>
+                <input type="input speed__input" type="number" id="t" step="0.1" required/>
+
+                <label class="label text" for="uboat_v">Speed of your U-Boat (kn/s) (v):</label>
+                <input type="input speed__input" type="number" id="uboat_v" step="0.1" value="0" required/>
+
+                <label class="label text" for="rber">Relative Bearing (°) (RBER):</label>
+                <input type="input rber_input" type="number" id="rber" step="1" value="0" required/>
+                
+                <button class="button" onclick="calculate()">Calculate Speed</button>
+                
+                <div class="result">
+                <p class="speed__p p text">Result:</p>
+                <p class="speed__p p text" id="result_speed"></p>  
+            </div>
+        </div>
+    </div>
+    <script>
+        function calculateRange() {
+            // Get values from the input fields
+            const h = parseFloat(document.getElementById("h").value);
+            const H = parseFloat(document.getElementById("H").value);
+            const zoom = document.querySelector('input[name="zoom"]:checked').value;
+
+            // Get radians for future use in the range
+            const radians = (h / 16) / (180 / Math.PI);
+
+            // Calculate the range
+            var range = 0
+            if (zoom === "1.5x") {
+                range = H / Math.tan(radians);
+            } else if (zoom === "6x") {
+                range = 4 * H / Math.tan(radians);
+            }
+
+            document.getElementById("result_range").textContent = `${range.toFixed(0)} m`;
+        }
+        function calculateAOB() {
+            // Get values from the input fields
+            const l = parseFloat(document.getElementById("l").value);
+            const h = parseFloat(document.getElementById("h").value);
+            const L = parseFloat(document.getElementById("L").value);
+            const H = parseFloat(document.getElementById("H").value);
+            const direction = document.querySelector('input[name="direction"]:checked').value;
+
+            // Calculate radians for the AOB calculation
+            const radians = Math.asin((l / (h / 16)) / (L / H));
+
+            // Calculate degrees for the AOB value
+            const degrees = (180 / Math.PI) * radians;
+
+            // Calculate reversed angle in case of "AOB going away from you"
+            if (direction === "away") {
+                document.getElementById("result_AOB").textContent = `${180 - degrees.toFixed(2)}°`;
+            } else {
+                document.getElementById("result_AOB").textContent = `${degrees.toFixed(2)}°`;
+            }
+        }
+        function calculate() {
+            // Get values from the input fields
+            const d = parseFloat(document.getElementById('d').value);
+            const t = parseFloat(document.getElementById('t').value);
+            const uboat_v = parseFloat(document.getElementById("uboat_v").value);
+            const rber = parseFloat(document.getElementById("rber").value);
+
+            // Calculate the speed in mps
+            const mps = (d / t) - (uboat_v * Math.sin(rber));
+
+            // Convert the speed into knots per second
+            const knots = mps * 1.94384;
+
+            // Show the result
+            document.getElementById('result_speed').innerHTML = knots.toFixed(2) + ' kn/s';
+        }
+    </script>
+</body>
+</html>
